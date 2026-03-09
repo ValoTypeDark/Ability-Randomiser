@@ -1,20 +1,20 @@
 # ⚡ Pokémon Ability Randomizer
 
-A desktop app for randomly drawing Pokémon abilities — useful for nuzlockes, challenge runs, or just messing around. Built with Python and tkinter, works fully offline once the ability cache is set up.
+A desktop app for randomly drawing Pokémon abilities: useful for nuzlockes, challenge runs, or just messing around. Built with Python and tkinter, works fully offline once the ability cache is set up.
 
 ---
 
 ## Features
 
 - **Roll abilities** from any combination of generations (Gen III–IX)
-- **Game presets** — select a game and generations are auto-set to match
-- **Dramatic Reveal mode** — roll abilities and have them unveiled one by one with a full-window fade-in animation
-- **Ban / Cringe list** — mark abilities you never want to see in rolls
-- **Ban & Reroll** — ban a rolled ability mid-session and immediately replace it
-- **Ability browser** — search and browse the full ability list with effect descriptions
-- **Profile card** — set your trainer name and avatar
-- **10 themes** — Pokédex, Charizard, Bulbasaur, Blastoise, Gengar, Pikachu, Glaceon, Umbreon, Sylveon, Team Rocket
-- **Persistent settings** — bans, theme, generations, and profile are saved between sessions
+- **Game presets**: select a game and generations are auto-set to match
+- **Dramatic Reveal mode**: roll abilities and have them unveiled one by one with a full-window fade-in animation
+- **Ban / Cringe list**: mark abilities you never want to see in rolls
+- **Ban & Reroll**: ban a rolled ability mid-session and immediately replace it
+- **Ability browser**: search and browse the full ability list with effect descriptions
+- **Profile card**: set your trainer name and avatar
+- **10 themes**: Pokédex, Charizard, Bulbasaur, Blastoise, Gengar, Pikachu, Glaceon, Umbreon, Sylveon, Team Rocket
+- **Persistent settings**: bans, theme, generations, and profile are saved between sessions
 
 ---
 
@@ -36,7 +36,7 @@ pip install Pillow
 
 The app needs a local ability cache to work. You have two options:
 
-**Option A — Fetch from PokéAPI (recommended)**
+**Option A: Fetch from PokéAPI (recommended)**
 
 Run the app, then click **🔄 Update from PokéAPI** in the Game Preset panel. This fetches all abilities and saves them to `data/abilities.json`. Takes 1–3 minutes depending on your connection.
 
@@ -46,7 +46,7 @@ Or from the command line:
 python pokemon_ability_randomizer.py --update-abilities
 ```
 
-**Option B — Use an existing cache**
+**Option B: Use an existing cache**
 
 Place a valid `abilities.json` file in the `data/` folder next to the script. The expected format is:
 
@@ -157,10 +157,10 @@ Switch themes using the dropdown in the header. The theme is applied live and sa
 
 ## Troubleshooting
 
-**"No ability cache found"** — Run `--update-abilities` or click Update from PokéAPI to generate the cache.
+**"No ability cache found"**: Run `--update-abilities` or click Update from PokéAPI to generate the cache.
 
-**Avatar doesn't load** — Install Pillow (`pip install Pillow`) and restart the app.
+**Avatar doesn't load**: Install Pillow (`pip install Pillow`) and restart the app.
 
-**tkinter not found** — On Linux you may need to install it separately: `sudo apt install python3-tk`
+**tkinter not found**: On Linux you may need to install it separately: `sudo apt install python3-tk`
 
-**PokéAPI update fails** — The fetch requires an internet connection. The app works fine offline once the cache exists.
+**PokéAPI update fails**: The fetch requires an internet connection. The app works fine offline once the cache exists.
