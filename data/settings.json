@@ -1,0 +1,22 @@
+{
+  "banned_abilities": [
+    "adaptability",
+    "huge-power",
+    "pure-power",
+    "wonder-guard"
+  ],
+  "include_banned": false,
+  "main_series_only": true,
+  "selected_game": "Scarlet / Violet",
+  "selected_generations": [
+    "GEN III",
+    "GEN IV",
+    "GEN V",
+    "GEN VI",
+    "GEN VII",
+    "GEN VIII",
+    "GEN IX"
+  ],
+  "theme": "Pokédex (Default)",
+  "user_name": "Valo"
+}
