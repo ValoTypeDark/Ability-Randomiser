@@ -1,6 +1,6 @@
 # ⚡ Pokémon Ability Randomizer
 
-A desktop app for randomly drawing Pokémon abilities: useful for nuzlockes, challenge runs, or just messing around. Built with Python and tkinter, works fully offline once the ability cache is set up.
+A desktop app for randomly drawing Pokémon abilities: useful for "Then We Fight" style content. Built with Python and tkinter, works fully offline once the ability cache is set up.
 
 ---
 
