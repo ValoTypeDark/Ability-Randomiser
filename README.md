@@ -32,7 +32,7 @@ pip install Pillow
 
 ## Setup
 
-### 1. Get the ability data
+### 1. Get the ability data if you just downloaded the PY (zip contains up-to-date Abilities)
 
 The app needs a local ability cache to work. You have two options:
 
