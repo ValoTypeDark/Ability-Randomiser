@@ -15,6 +15,7 @@ A desktop app for randomly drawing Pokémon abilities: useful for "Then We Fight
 - **Profile card**: set your trainer name and avatar
 - **10 themes**: Pokédex, Charizard, Bulbasaur, Blastoise, Gengar, Pikachu, Glaceon, Umbreon, Sylveon, Team Rocket
 - **Persistent settings**: bans, theme, generations, and profile are saved between sessions
+- **Auto-update**: checks for new GitHub releases on launch and can update itself in one click
 
 ---
 
@@ -152,6 +153,19 @@ Switch themes using the dropdown in the header. The theme is applied live and sa
 | 🌙 Umbreon | Near-black with ring gold |
 | 🌸 Sylveon | Dark pink and ribbon blue |
 | 🖤 Team Rocket | Black and villain red |
+
+---
+
+## Auto-update
+
+On launch, the app checks the [GitHub releases page](https://github.com/ValoTypeDark/Ability-Randomiser/releases) for a newer version. If one is found, you'll see a prompt:
+
+- Click **Yes** to download and install the update automatically. The app replaces itself and restarts.
+- Click **No** to skip and continue with the current version.
+
+The update downloads the latest script directly from the repository. Your `data/` folder (abilities, settings, avatar) is untouched.
+
+If the download fails for any reason, the current version is left intact and you'll see an error with a link to download manually.
 
 ---
 
