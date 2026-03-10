@@ -32,6 +32,10 @@ os.makedirs(DATA_DIR, exist_ok=True)
 APP_TITLE    = "Pokémon Ability Randomizer"
 POKEAPI_BASE = "https://pokeapi.co/api/v2"
 
+VERSION    = "1.0.0"
+GITHUB_API = "https://api.github.com/repos/ValoTypeDark/Ability-Randomiser/releases/latest"
+GITHUB_RAW = "https://raw.githubusercontent.com/ValoTypeDark/Ability-Randomiser/refs/heads/main/pokemon_ability_randomizer.py"
+
 GENERATIONS = ["GEN III", "GEN IV", "GEN V", "GEN VI", "GEN VII", "GEN VIII", "GEN IX"]
 GEN_ORDER   = {g: i for i, g in enumerate(GENERATIONS)}
 
@@ -233,6 +237,7 @@ class AbilityRandomizerApp:
         self._update_status()
         self._refresh_ability_views()
         self.root.after(100, self._maybe_first_launch)
+        self.root.after(1500, self._check_for_update)
 
     # ══════════════════════════════════════════════════════════════════════════
     #  Theme engine
@@ -1484,6 +1489,77 @@ class AbilityRandomizerApp:
         ov.bind("<KeyPress>", on_key)
         ov.focus_set()
         show_card(0)
+
+    # ══════════════════════════════════════════════════════════════════════════
+    #  Auto-update
+    # ══════════════════════════════════════════════════════════════════════════
+
+    def _check_for_update(self):
+        """Background thread: compare current VERSION against latest GitHub release tag."""
+        def worker():
+            try:
+                req = Request(GITHUB_API,
+                              headers={"User-Agent": "PokemonAbilityRandomizer/" + VERSION,
+                                       "Accept": "application/vnd.github+json"})
+                with urlopen(req, timeout=8) as r:
+                    data = json.loads(r.read().decode())
+                tag = data.get("tag_name", "").lstrip("v")
+                if tag and tag != VERSION:
+                    self.root.after(0, lambda: self._prompt_update(tag))
+            except Exception:
+                pass   # no internet, rate-limited, etc. — fail silently
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def _prompt_update(self, new_version: str):
+        """Ask the user whether to download and install the new version."""
+        if not messagebox.askyesno(
+                APP_TITLE,
+                f"A new version is available:  v{new_version}  (you have v{VERSION})\n\n"
+                "Download and install it now?\n"
+                "The app will restart automatically after updating.",
+                icon="info"):
+            return
+        threading.Thread(target=self._download_and_replace, daemon=True).start()
+
+    def _download_and_replace(self):
+        """Download the new script to a temp file, swap on success, then restart."""
+        import tempfile, shutil
+
+        self.root.after(0, lambda: self.status_var.set("Downloading update…"))
+        try:
+            req = Request(GITHUB_RAW,
+                          headers={"User-Agent": "PokemonAbilityRandomizer/" + VERSION})
+            with urlopen(req, timeout=30) as r:
+                new_src = r.read()
+
+            script_path = os.path.abspath(__file__)
+            tmp_fd, tmp_path = tempfile.mkstemp(suffix=".py",
+                                                dir=os.path.dirname(script_path))
+            try:
+                with os.fdopen(tmp_fd, "wb") as f:
+                    f.write(new_src)
+                shutil.move(tmp_path, script_path)
+            except Exception:
+                try: os.unlink(tmp_path)
+                except Exception: pass
+                raise
+
+            self.root.after(0, self._restart_after_update)
+
+        except Exception as e:
+            self.root.after(0, lambda: (
+                self.status_var.set("Update failed."),
+                messagebox.showerror(APP_TITLE,
+                    f"Update download failed:\n{e}\n\n"
+                    "You can update manually at:\n"
+                    "https://github.com/ValoTypeDark/Ability-Randomiser")))
+
+    def _restart_after_update(self):
+        """Inform the user then re-launch the script."""
+        messagebox.showinfo(APP_TITLE, "Update installed!\n\nThe app will now restart.")
+        self.root.destroy()
+        os.execv(sys.executable, [sys.executable, os.path.abspath(__file__)])
 
 
 # ══════════════════════════════════════════════════════════════════════════════
